@@ -1,0 +1,78 @@
+<!-- porttfolio-provincia.html -->
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block contenido %}
+
+    <div class="container">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3">{{ provinciaSeleccionada.pr_nombre }}
+            <small> - {{ provinciaSeleccionada.pr_pais.pa_nombre }}</small>
+        </h1>
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index.html">Home</a>
+            </li>
+            <li class="breadcrumb-item active">{{ provinciaSeleccionada.pr_nombre }}</li>
+        </ol>
+
+        <div class="row">
+            {% for escort in escorts %}
+                <div class="col-lg-4 col-sm-6 portfolio-item">
+                    <div class="card h-100">
+
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="portafolio-{{ escort.es_slug }}.html">{{ escort.es_nombre }}
+                                    <img class="card-img-top" src="{% static escort.full_ruta_foto_1 %}"
+                                         alt="{{ escort.es_nombre }}">
+                                </a>
+                            </h4>
+                            <p class="card-text">{{ escort.es_descripcion }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if escorts.has_other_pages %}
+            <nav aria-label="...">
+                <ul class="pagination ">
+                    {% if escorts.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ escorts.previous_page_number }}" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for i in escorts.paginator.page_range %}
+                        {% if escorts.number == i %}
+
+                            <li class="page-item active">
+                              <a class="page-link" >{{ i }} <span class="sr-only">(current)</span></a>
+                            </li>
+
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if escorts.has_next %}
+                        <li class="">
+                            <a class="page-link" href="?page={{ escorts.next_page_number }}" aria-label="Próxima">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Próxima</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+        {% endif %}
+
+    </div>
+
+{% endblock contenido %}
+

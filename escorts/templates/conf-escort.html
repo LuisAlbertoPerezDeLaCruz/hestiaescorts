@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+    <div class="container">
+
+      <!-- Page Heading/Breadcrumbs -->
+      <br>
+      <h1 class="mt-4 mb-3">Configuración de la Información
+        <small> - {{ user.profile.full_name }} </small>
+      </h1>
+
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">Home</a>
+        </li>
+        <li class="breadcrumb-item active">Configuración
+        </li>
+      </ol>
+
+      <div class="row">
+        <div class="col-lg-8 mb-4">
+          <h4>Entre sus datos</h4>
+          <br>
+          <form name="sentMessage" id="contactForm" novalidate>
+            <div class="control-group form-group">
+              <div class="controls">
+                <label>Nombre:</label>
+                <input type="text" class="form-control" id="nombre" required data-validation-required-message="Entre su nombre.">
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="control-group form-group">
+              <div class="controls">
+                <label>Apellido:</label>
+                <input type="text" class="form-control" id="apellido" required data-validation-required-message="Entre su apellido.">
+                <p class="help-block"></p>
+              </div>
+            </div>
+            <div class="control-group form-group">
+              <div class="controls">
+                <label>Teléfono:</label>
+                <input type="tel" class="form-control" id=telefono" required data-validation-required-message="Entre su teléfono.">
+              </div>
+            </div>
+            <div class="control-group form-group">
+              <div class="controls">
+                <label>Email:</label>
+                <input type="email" class="form-control" id="email" required data-validation-required-message="Entre su email.">
+              </div>
+            </div>
+            <div class="control-group form-group">
+              <div class="controls">
+                <label>Su descripción:</label>
+                <textarea rows="10" cols="100" class="form-control" id="message" required data-validation-required-message="Entre su descripción personal" maxlength="999" style="resize:none"></textarea>
+              </div>
+            </div>
+
+      <!-- Related Projects Row -->
+      <h3 class="my-4">Fotos</h3>
+
+      <div class="row">
+
+        <div class="col-md-8">
+          <img class="img-fluid" src="http://placehold.it/750x500" alt="">
+        </div>
+
+      </div>
+
+      <br>
+
+      <div class="row">
+
+        <div class="col-md-3 col-sm-6 mb-4">
+          <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+          <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+          <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+          <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+            <div id="success"></div>
+            <!-- For success/fail messages -->
+            <br>
+            <button type="submit" class="btn btn-primary" id="sendConfiguracionButton">Guardar</button>
+            <br>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+
+{% endblock contenido %}
+
