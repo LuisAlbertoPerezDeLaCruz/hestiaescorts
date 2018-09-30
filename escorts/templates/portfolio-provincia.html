@@ -16,10 +16,46 @@
             </li>
             <li class="breadcrumb-item active">{{ provinciaSeleccionada.pr_nombre }}</li>
         </ol>
+        <br>
+        <!-- Pagination -->
+        {% if escorts.has_other_pages %}
+            <nav aria-label="..."  >
+                <ul class="pagination justify-content-center" >
+                    {% if escorts.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ escorts.previous_page_number }}" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for i in escorts.paginator.page_range %}
+                        {% if escorts.number == i %}
+
+                            <li class="page-item active">
+                              <a class="page-link" >{{ i }} <span class="sr-only">(current)</span></a>
+                            </li>
+
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if escorts.has_next %}
+                        <li class="">
+                            <a class="page-link" href="?page={{ escorts.next_page_number }}" aria-label="Próxima">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Próxima</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+        {% endif %}
 
         <div class="row">
             {% for escort in escorts %}
-                <div class="col-lg-4 col-sm-6 portfolio-item">
+                <div class="col-lg-3 col-sm-6 portfolio-item">
                     <div class="card h-100">
 
                         <div class="card-body">
@@ -35,11 +71,11 @@
                 </div>
             {% endfor %}
         </div>
-
+        <br>
         <!-- Pagination -->
         {% if escorts.has_other_pages %}
             <nav aria-label="...">
-                <ul class="pagination ">
+                <ul class="pagination justify-content-center">
                     {% if escorts.has_previous %}
                         <li class="page-item">
                             <a class="page-link" href="?page={{ escorts.previous_page_number }}" aria-label="Anterior">

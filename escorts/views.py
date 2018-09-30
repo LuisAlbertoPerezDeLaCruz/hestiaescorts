@@ -67,7 +67,7 @@ def portfolio_3_col(request,pk):
 
     page = request.GET.get('page', 1)
 
-    paginator = Paginator(escorts_list, 2)
+    paginator = Paginator(escorts_list, 12)
 
     try:
         escorts = paginator.page(page)

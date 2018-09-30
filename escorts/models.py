@@ -24,6 +24,14 @@ class Provincia(models.Model):
     def __str__(self):
         return smart_str(self.pr_nombre)
 
+    def _get_number_escorts(self):
+        "Devuelve el la cantidad de escorts"
+        n=Escort.objects.filter(es_provincia=self).count()
+        temp= n
+        return temp
+
+    number_escorts = property(_get_number_escorts)
+
 class Escort(models.Model):
     es_slug=models.CharField(max_length=15)
     es_user=models.OneToOneField('auth.User', on_delete=models.CASCADE, related_name="profile")
