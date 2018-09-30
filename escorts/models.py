@@ -34,7 +34,7 @@ class Escort(models.Model):
     es_descripcion = models.TextField(blank=True,null=True,default='')
 
     def __str__(self):
-        return "%s (%s)" % (unicode(self.es_nombre),self.es_user.username)
+        return "%s (%s)" % (smart_str(self.es_nombre),self.es_user.username)
 
     def _get_full_name(self):
         "Devuelve el nombre completo"
@@ -66,14 +66,14 @@ class Servicios(models.Model):
     sv_nombre=models.CharField( max_length=30)
 
     def __str__(self):
-        return unicode(self.sv_nombre)
+        return smart_str(self.sv_nombre)
 
 
 class Duracion(models.Model):
     du_nombre=models.CharField( max_length=30)
 
     def __str__(self):
-        return unicode(self.du_nombre)
+        return smart_str(self.du_nombre)
 
 
 class ServiciosEscort(models.Model):
@@ -82,4 +82,4 @@ class ServiciosEscort(models.Model):
     se_precio = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
-        return "%s %s" % (unicode(self.se_servicio), unicode(self.se_duracion.du_nombre))
+        return "%s %s" % (smart_str(self.se_servicio), smart_str(self.se_duracion.du_nombre))
