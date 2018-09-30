@@ -45,7 +45,7 @@ class Escort(models.Model):
 
     def _get_ruta_carpeta(self):
         "Devuelve la ruta de la carpeta de imagenes"
-        url='../proyecto_escorts/escorts/static/imagenes'
+        url=settings.BASE_DIR+'/escorts'+static('imagenes')
         temp= '%s/%s/%s' % (url,self.es_pais.pk,self.es_user.username)
         return temp
 
