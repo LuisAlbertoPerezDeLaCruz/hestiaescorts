@@ -8,9 +8,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 provincias = Provincia.objects.all().order_by('pr_nombre')
+hestiaInfo = HestiaInfo.objects.all()[0]
 
 def index(request):
-    return render(request, "index.html", {'provincias':provincias})
+    return render(request, "index.html", {'provincias':provincias,'info':hestiaInfo})
 
 def v404(request):
     return render(request, "404.html", {'provincias':provincias})

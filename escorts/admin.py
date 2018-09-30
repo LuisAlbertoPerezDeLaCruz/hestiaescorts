@@ -8,3 +8,4 @@ from django.contrib import admin
 admin.site.register(Pais)
 admin.site.register(Provincia)
 admin.site.register(Escort)
+admin.site.register(HestiaInfo)

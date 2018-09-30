@@ -6,6 +6,7 @@ from django.db import models
 from django.utils.encoding import smart_str
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.conf import settings
+from django.core import serializers
 
 import os
 
@@ -91,3 +92,33 @@ class ServiciosEscort(models.Model):
 
     def __str__(self):
         return "%s %s" % (smart_str(self.se_servicio), smart_str(self.se_duracion.du_nombre))
+
+class HestiaInfo(models.Model):
+    hi_carrusel_cantidad = models.IntegerField(default=3)
+    hi_carrusel_1_titulo = models.CharField( max_length=100,null=True, blank=True,default='')
+    hi_carrusel_1_descripcion = models.CharField( max_length=100,null=True, blank=True,default='')
+    hi_carrusel_2_titulo = models.CharField( max_length=100,null=True, blank=True,default='')
+    hi_carrusel_2_descripcion = models.CharField( max_length=100,null=True, blank=True,default='')
+    hi_carrusel_3_titulo = models.CharField( max_length=100,null=True, blank=True,default='')
+    hi_carrusel_3_descripcion = models.CharField( max_length=100,null=True, blank=True,default='')
+    hi_pais = models.ForeignKey('Pais', blank=True, null=True, default='SP')
+
+    def _get_ruta_carpeta(self):
+        "Devuelve la ruta de la carpeta de imagenes"
+        url=settings.BASE_DIR+'/escorts'+static('imagenes')
+        temp= '%s/%s/%s' % (url,self.hi_pais.pk,'hestia')
+        return temp
+
+    full_ruta_carpeta = property(_get_ruta_carpeta)
+
+    def _get_full_ruta_foto_carrusel(self):
+        ruta=self.full_ruta_carpeta+'/carrusel'
+        listaFotos=os.listdir(ruta)
+        fotosCarrusel=[]
+        if listaFotos:
+            for foto in listaFotos:
+                fotosCarrusel.append('imagenes/'+self.hi_pais.pk+'/hestia/carrusel/'+foto)
+
+        return fotosCarrusel
+
+    fotos_carrusel = property(_get_full_ruta_foto_carrusel)

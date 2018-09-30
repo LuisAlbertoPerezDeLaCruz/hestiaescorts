@@ -5,11 +5,17 @@
  */
 
 body {
-  padding-top: 54px;
+    padding-top: 54px;
 }
 
 @media (min-width: 992px) {
-  body {
-    padding-top: 56px;
-  }
+    body {
+        padding-top: 56px;
+    }
+}
+
+.carrusel-primary {
+    color: #b21f2d;
+    background-color: #fff;
+    border-color: #b21f2d;
 }
