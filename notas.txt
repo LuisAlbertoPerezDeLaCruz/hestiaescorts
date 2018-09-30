@@ -1,0 +1,7 @@
+git@github.com:LuisAlbertoPerezDeLaCruz/hestiaescorts.git
+https://github.com/LuisAlbertoPerezDeLaCruz/hestiaescorts.git
+
+/home/hestiaescorts/hestiaescorts/
+/home/hestiaescorts/hestiaescorts/proyecto_escorts/
+
+touch /var/www/hestiaescorts_pythonanywhere_com_wsgi.py
