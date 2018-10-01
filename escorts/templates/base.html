@@ -1,5 +1,9 @@
+<!-- base.html -->
+
 <!DOCTYPE html>
+
 {% load staticfiles %}
+
 <html lang="en">
 
   <head>
@@ -60,11 +64,11 @@
             {% endif %}
             {% if user.is_authenticated %}
                <li class="nav-item">
-                  <a class="nav-link" href="conf-escort.html">Mi Información</a>
+                  <a class="nav-link" href="conf-escort-{{ user.username }}">Mi Información</a>
                </li>
             {% else %}
                <li class="nav-item">
-                  <a class="nav-link" href="conf-escort.html">Registrarse</a>
+                  <a class="nav-link" href="conf-escort-registro">Registrarse</a>
                </li>
             {% endif %}
             <li class="nav-item dropdown">

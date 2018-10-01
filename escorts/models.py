@@ -6,7 +6,7 @@ from django.db import models
 from django.utils.encoding import smart_str
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.conf import settings
-from django.core import serializers
+from django.contrib.auth.models import User
 
 import os
 
@@ -41,6 +41,8 @@ class Escort(models.Model):
     es_nombre = models.CharField( max_length=30)
     es_apellido = models.CharField( max_length=30)
     es_descripcion = models.TextField(blank=True,null=True,default='')
+    es_telefono = models.CharField( max_length=12,blank=True, null=True,default='')
+    es_correo = models.CharField( max_length=30,blank=True, null=True,default='')
 
     def __str__(self):
         return "%s (%s)" % (smart_str(self.es_nombre),self.es_user.username)
@@ -64,12 +66,67 @@ class Escort(models.Model):
         ruta=self.full_ruta_carpeta+'/img_ppal'
         listaFotos=os.listdir(ruta)
         if listaFotos:
-            return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_ppal/'+listaFotos[0]
+            try:
+                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_ppal/'+listaFotos[0]
+            except:
+                return ''
         else:
-            return None
+            return ''
 
     full_ruta_foto_1 = property(_get_full_ruta_foto_1)
+    
+    def _get_full_ruta_foto_2(self):
+        ruta=self.full_ruta_carpeta+'/img_ppal'
+        listaFotos=os.listdir(ruta)
+        if listaFotos:
+            try:
+                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_ppal/'+listaFotos[1]
+            except:
+                return ''
+        else:
+            return ''
 
+    full_ruta_foto_2 = property(_get_full_ruta_foto_2)
+    
+    def _get_full_ruta_foto_3(self):
+        ruta=self.full_ruta_carpeta+'/img_ppal'
+        listaFotos=os.listdir(ruta)
+        if listaFotos:
+            try:
+                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_ppal/'+listaFotos[2]
+            except:
+                return ''
+        else:
+            return ''
+
+    full_ruta_foto_3 = property(_get_full_ruta_foto_3)
+    
+    def _get_full_ruta_foto_4(self):
+        ruta=self.full_ruta_carpeta+'/img_ppal'
+        listaFotos=os.listdir(ruta)
+        if listaFotos:
+            try:
+                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_ppal/'+listaFotos[3]
+            except:
+                return ''
+        else:
+            return ''
+
+    full_ruta_foto_4 = property(_get_full_ruta_foto_4)
+    
+    def _get_full_ruta_foto_5(self):
+        ruta=self.full_ruta_carpeta+'/img_ppal'
+        listaFotos=os.listdir(ruta)
+        if listaFotos:
+            try:
+                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_ppal/'+listaFotos[4]
+            except:
+                return ''
+        else:
+            return ''
+
+    full_ruta_foto_5 = property(_get_full_ruta_foto_5)
+    
 class Servicios(models.Model):
     sv_pais = models.ForeignKey('Pais', blank=True, null=True)
     sv_nombre=models.CharField( max_length=30)

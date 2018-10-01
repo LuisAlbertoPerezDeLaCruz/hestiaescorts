@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from .models import *
+from django.contrib.auth import *
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -33,9 +34,6 @@ def contact(request):
 
 def faq(request):
     return render(request, "faq.html", {'provincias':provincias})
-
-def conf_escort(request):
-    return render(request, "conf-escort.html", {'provincias':provincias})
 
 def portfolio_1_col(request):
     return render(request, "portfolio-1-col.html", {'provincias':provincias})
@@ -84,7 +82,8 @@ def portfolio_3_col(request,pk):
     })
 
 def portfolio_escort(request,pk):
-    escortSeleccionada=Escort.objects.get(es_slug=pk)
+    user=User.objects.get(username=pk)
+    escortSeleccionada=Escort.objects.get(es_user=user)
     provinciaSeleccionada=Provincia.objects.get(pk=escortSeleccionada.es_provincia.pk)
     return render(request, "portfolio-escort.html", {
         'provincias': provincias,
@@ -92,3 +91,12 @@ def portfolio_escort(request,pk):
         'escortSeleccionada':escortSeleccionada,
     })
 
+def conf_escort(request,pk):
+    if pk=='registro':
+        return render(request, "conf-escort.html", {'provincias':provincias})
+    user=User.objects.get(username=pk)
+    escortSeleccionada=Escort.objects.get(es_user=user)
+    return render(request, "conf-escort.html", {
+        'provincias': provincias,
+        'escortSeleccionada':escortSeleccionada,
+    })

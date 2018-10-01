@@ -1,4 +1,9 @@
+<!-- conf-escort.html -->
+
 {% extends 'base.html' %}
+
+{% load filtrosEspeciales %}
+{% load staticfiles %}
 
 {% block contenido %}
 
@@ -22,37 +27,37 @@
         <div class="col-lg-8 mb-4">
           <h4>Entre sus datos</h4>
           <br>
-          <form name="sentMessage" id="contactForm" novalidate>
+          <form name="sentMessage" action="conf-escort.html" id="contactForm" novalidate>
             <div class="control-group form-group">
               <div class="controls">
                 <label>Nombre:</label>
-                <input type="text" class="form-control" id="nombre" required data-validation-required-message="Entre su nombre.">
+                <input type="text" class="form-control" id="nombre" value="{{ escortSeleccionada.es_nombre }}" required data-validation-required-message="Entre su nombre.">
                 <p class="help-block"></p>
               </div>
             </div>
             <div class="control-group form-group">
               <div class="controls">
                 <label>Apellido:</label>
-                <input type="text" class="form-control" id="apellido" required data-validation-required-message="Entre su apellido.">
+                <input type="text" class="form-control" id="apellido" value="{{ escortSeleccionada.es_apellido }}" required data-validation-required-message="Entre su apellido.">
                 <p class="help-block"></p>
               </div>
             </div>
             <div class="control-group form-group">
               <div class="controls">
                 <label>Teléfono:</label>
-                <input type="tel" class="form-control" id=telefono" required data-validation-required-message="Entre su teléfono.">
+                <input type="tel" class="form-control" id=telefono" value="{{ escortSeleccionada.es_telefono|phone_number }}" required data-validation-required-message="Entre su teléfono.">
               </div>
             </div>
             <div class="control-group form-group">
               <div class="controls">
                 <label>Email:</label>
-                <input type="email" class="form-control" id="email" required data-validation-required-message="Entre su email.">
+                <input type="email" class="form-control" id="email" value="{{ escortSeleccionada.es_correo }}" required data-validation-required-message="Entre su email.">
               </div>
             </div>
             <div class="control-group form-group">
               <div class="controls">
                 <label>Su descripción:</label>
-                <textarea rows="10" cols="100" class="form-control" id="message" required data-validation-required-message="Entre su descripción personal" maxlength="999" style="resize:none"></textarea>
+                <textarea rows="10" cols="100" class="form-control" id="message" required data-validation-required-message="Entre su descripción personal" maxlength="999" style="resize:none">{{ escortSeleccionada.es_descripcion }}</textarea>
               </div>
             </div>
 
@@ -62,7 +67,9 @@
       <div class="row">
 
         <div class="col-md-8">
-          <img class="img-fluid" src="http://placehold.it/750x500" alt="">
+
+          <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_1 %}"  alt="{{ escortSeleccionada.es_nombre }}">
+
         </div>
 
       </div>
@@ -73,25 +80,25 @@
 
         <div class="col-md-3 col-sm-6 mb-4">
           <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+            img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_2 %}"  alt="{{ escortSeleccionada.es_nombre }}">
           </a>
         </div>
 
         <div class="col-md-3 col-sm-6 mb-4">
           <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+            img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_3 %}"  alt="{{ escortSeleccionada.es_nombre }}">
           </a>
         </div>
 
         <div class="col-md-3 col-sm-6 mb-4">
           <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+            img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_4 %}"  alt="{{ escortSeleccionada.es_nombre }}">
           </a>
         </div>
 
         <div class="col-md-3 col-sm-6 mb-4">
           <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+            img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_1 %}"  alt="{{ escortSeleccionada.es_nombre }}">
           </a>
         </div>
 

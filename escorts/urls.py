@@ -11,11 +11,11 @@ urlpatterns = [
     url(r'^blog-post.html$', views.blog_post, name='blog-post'),
     url(r'^contact.html$', views.contact, name='contact'),
     url(r'^faq.html$', views.faq, name='faq'),
-    url(r'^conf-escort.html$', views.conf_escort, name='conf-escort'),
     url(r'^portfolio-item.html$', views.portfolio_item, name='portfolio-item'),
     url(r'^pricing.html$', views.pricing, name='pricing'),
     url(r'^services.html$', views.services, name='services'),
     url(r'^sidebar.html$', views.sidebar, name='sidebar'),
     url(r'^provincia-(?P<pk>[\w\-]+).html$', views.portfolio_3_col, name='provincia'),
-    url(r'^portafolio-(?P<pk>[\w\-]+).html$', views.portfolio_escort, name='portafolio'),
+    url(r'^portfolio-(?P<pk>[\w\-]+)$', views.portfolio_escort, name='portfolio'),
+    url(r'^conf-escort-(?P<pk>[\w\-]+)$', views.conf_escort, name='conf-escort'),
 ]
