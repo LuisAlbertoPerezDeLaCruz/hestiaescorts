@@ -6,74 +6,91 @@
 
     <div class="container">
 
-      <!-- Page Heading/Breadcrumbs -->
-      <h1 class="mt-4 mb-3">{{ escortSeleccionada.es_nombre }}
-        <small>{{ escortSeleccionada.es_provincia.pr_nombre }} - {{ escortSeleccionada.es_pais.pa_nombre }}</small>
-      </h1>
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3">{{ escortSeleccionada.es_nombre }}
+            <small>{{ escortSeleccionada.es_provincia.pr_nombre }} - {{ escortSeleccionada.es_pais.pa_nombre }}</small>
+        </h1>
 
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.html">Home</a>
-        </li>
-        <li class="breadcrumb-item">
-          <a href="provincia-{{ provinciaSeleccionada.pk }}.html">{{ provinciaSeleccionada.pr_nombre }}</a>
-        </li>
-        <li class="breadcrumb-item active">{{ escortSeleccionada.es_slug }}</li>
-      </ol>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index.html">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="provincia-{{ provinciaSeleccionada.pk }}.html">{{ provinciaSeleccionada.pr_nombre }}</a>
+            </li>
+            <li class="breadcrumb-item active">{{ escortSeleccionada.es_slug }}</li>
+        </ol>
 
-      <!-- Portfolio Item Row -->
-      <div class="row">
+        <!-- Portfolio Item Row -->
+        <div class="row">
 
-        <div class="col-md-8">
-          <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_1 %}"  alt="{{ escortSeleccionada.es_nombre }}">
+            <div class="col-md-8">
+                <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_1 %}"
+                     alt="{{ escortSeleccionada.es_nombre }}">
+            </div>
+
+            <div class="col-md-4">
+                <h3 class="my-3">Project Description</h3>
+                <p>{{ escortSeleccionada.es_descripcion }}</p>
+                <h3 class="my-3">Servicios</h3>
+                <ul>
+                    <li>Lorem Ipsum</li>
+                    <li>Dolor Sit Amet</li>
+                    <li>Consectetur</li>
+                    <li>Adipiscing Elit</li>
+                </ul>
+            </div>
+
         </div>
+        <!-- /.row -->
 
-        <div class="col-md-4">
-          <h3 class="my-3">Project Description</h3>
-          <p>{{ escortSeleccionada.es_descripcion }}</p>
-          <h3 class="my-3">Servicios</h3>
-          <ul>
-            <li>Lorem Ipsum</li>
-            <li>Dolor Sit Amet</li>
-            <li>Consectetur</li>
-            <li>Adipiscing Elit</li>
-          </ul>
+        <!-- Related Projects Row -->
+        <h3 class="my-4">Related Projects</h3>
+
+        <div class="row">
+
+            <div class="col-md-3 col-sm-6 mb-4">
+                <a href="#">
+                    {% if escortSeleccionada.full_ruta_foto_2 %}
+                        <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_2 %}"
+                             alt="{{ escortSeleccionada.es_nombre }}">
+                    {% else %}
+                        <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+                    {% endif %}
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <a href="#">
+                    {% if escortSeleccionada.full_ruta_foto_3 %}
+                        <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_3 %}"
+                             alt="{{ escortSeleccionada.es_nombre }}">
+                    {% else %}
+                        <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+                    {% endif %}
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <a href="#">
+                    {% if escortSeleccionada.full_ruta_foto_4 %}
+                        <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_4 %}"
+                             alt="{{ escortSeleccionada.es_nombre }}">
+                    {% else %}
+                        <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+                    {% endif %}
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <a href="#">
+                    {% if escortSeleccionada.full_ruta_foto_5 %}
+                        <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_5 %}"
+                             alt="{{ escortSeleccionada.es_nombre }}">
+                    {% else %}
+                        <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+                    {% endif %}
+                </a>
+            </div>
         </div>
-
-      </div>
-      <!-- /.row -->
-
-      <!-- Related Projects Row -->
-      <h3 class="my-4">Related Projects</h3>
-
-      <div class="row">
-
-        <div class="col-md-3 col-sm-6 mb-4">
-          <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-          <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-          <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-        </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-          <a href="#">
-            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-          </a>
-        </div>
-
-      </div>
-      <!-- /.row -->
+        <!-- /.row -->
 
     </div>
 

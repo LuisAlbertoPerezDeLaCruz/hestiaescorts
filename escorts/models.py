@@ -76,11 +76,11 @@ class Escort(models.Model):
     full_ruta_foto_1 = property(_get_full_ruta_foto_1)
     
     def _get_full_ruta_foto_2(self):
-        ruta=self.full_ruta_carpeta+'/img_ppal'
+        ruta=self.full_ruta_carpeta+'/img_sec'
         listaFotos=os.listdir(ruta)
         if listaFotos:
             try:
-                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_ppal/'+listaFotos[1]
+                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_sec/'+listaFotos[0]
             except:
                 return ''
         else:
@@ -89,11 +89,11 @@ class Escort(models.Model):
     full_ruta_foto_2 = property(_get_full_ruta_foto_2)
     
     def _get_full_ruta_foto_3(self):
-        ruta=self.full_ruta_carpeta+'/img_ppal'
+        ruta=self.full_ruta_carpeta+'/img_sec'
         listaFotos=os.listdir(ruta)
         if listaFotos:
             try:
-                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_ppal/'+listaFotos[2]
+                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_sec/'+listaFotos[1]
             except:
                 return ''
         else:
@@ -102,11 +102,11 @@ class Escort(models.Model):
     full_ruta_foto_3 = property(_get_full_ruta_foto_3)
     
     def _get_full_ruta_foto_4(self):
-        ruta=self.full_ruta_carpeta+'/img_ppal'
+        ruta=self.full_ruta_carpeta+'/img_sec'
         listaFotos=os.listdir(ruta)
         if listaFotos:
             try:
-                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_ppal/'+listaFotos[3]
+                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_sec/'+listaFotos[2]
             except:
                 return ''
         else:
@@ -115,11 +115,11 @@ class Escort(models.Model):
     full_ruta_foto_4 = property(_get_full_ruta_foto_4)
     
     def _get_full_ruta_foto_5(self):
-        ruta=self.full_ruta_carpeta+'/img_ppal'
+        ruta=self.full_ruta_carpeta+'/img_sec'
         listaFotos=os.listdir(ruta)
         if listaFotos:
             try:
-                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_ppal/'+listaFotos[4]
+                return 'imagenes/'+self.es_pais.pk+'/'+self.es_user.username+'/img_sec/'+listaFotos[3]
             except:
                 return ''
         else:
