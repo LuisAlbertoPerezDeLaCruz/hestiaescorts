@@ -1,18 +1,8 @@
-<!-- porttfolio-provincia.html -->
+<!-- portfolio-ciudad.html -->
 
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block contenido %}
-
-    <script>
-
-        function actualizar(ciudadSlug) {
-            if (ciudadSlug !='')
-                window.location.href = 'ciudad?ciudadSlug='+ciudadSlug;
-        }
-
-    </script>
-
 
 
     <div class="container">
@@ -26,24 +16,10 @@
             <li class="breadcrumb-item">
                 <a href="index.html">Home</a>
             </li>
-            <li class="breadcrumb-item active">{{ provinciaSeleccionada.pr_nombre }}</li>
             <li class="breadcrumb-item">
-
-                <select name="ciudad" class="breadcrumb-item active" onclick="actualizar(value)">
-                    <option value="">Ciudades de {{ provinciaSeleccionada.pr_nombre }}</option>
-                    {% for ciudad in ciudades %}
-                        {% if ciudad.number_escorts > 0 %}
-                            <option id="idCiudad_{{ ciudad.cd_slug }}" + value="{{ ciudad.cd_slug }}">
-                                {{ ciudad.cd_nombre }}&nbsp;
-                                {% if ciudad.number_escorts > 0 %}
-                                    ({{ ciudad.number_escorts }})&nbsp;
-                                {% endif %}
-                            </option>
-                        {% endif %}
-                    {% endfor %}
-                </select>
-
+                <a href="provincia-{{ provinciaSeleccionada.pk }}.html">{{ provinciaSeleccionada.pr_nombre }}</a>
             </li>
+            <li class="breadcrumb-item active">{{ ciudadSeleccionada.cd_nombre }}</li>
         </ol>
 
         <br>

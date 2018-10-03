@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import *
 from django.contrib.auth import *
 
@@ -59,10 +59,15 @@ def services(request):
 def sidebar(request):
     return render(request, "sidebar.html", {'provincias':provincias})
 
-def portfolio_3_col(request,pk):
+def portfolio_provincia(request,pk):
     provinciaSeleccionada=Provincia.objects.get(pk=pk)
 
-    escorts_list=Escort.objects.filter(es_pais=provinciaSeleccionada.pr_pais,es_provincia=provinciaSeleccionada.pr_slug)
+    ciudades_list=Ciudad.objects.filter(cd_pais=provinciaSeleccionada.pr_pais,cd_provincia=provinciaSeleccionada.pr_slug).order_by('cd_nombre')
+    if 'ciudadSlug' in request.GET:
+        ciudadSlug=request.GET['ciudadSlug']
+        escorts_list=Escort.objects.filter(es_pais=provinciaSeleccionada.pr_pais,es_provincia=provinciaSeleccionada.pr_slug,es_ciudad=ciudadSlug)
+    else:
+        escorts_list=Escort.objects.filter(es_pais=provinciaSeleccionada.pr_pais,es_provincia=provinciaSeleccionada.pr_slug)
 
     page = request.GET.get('page', 1)
 
@@ -79,7 +84,34 @@ def portfolio_3_col(request,pk):
         'provincias':provincias,
         'provinciaSeleccionada':provinciaSeleccionada,
         'escorts':escorts,
+        'ciudades':ciudades_list,
     })
+
+def ciudad(request):
+    pk=request.GET['ciudadSlug'];
+    ciudadSeleccionada=Ciudad.objects.get(pk=pk)
+    provinciaSeleccionada=ciudadSeleccionada.cd_provincia
+    escorts_list=Escort.objects.filter(es_pais=ciudadSeleccionada.cd_pais,es_provincia=ciudadSeleccionada.cd_provincia, es_ciudad=ciudadSeleccionada)
+
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(escorts_list, 12)
+
+    try:
+        escorts = paginator.page(page)
+    except PageNotAnInteger:
+        escorts = paginator.page(1)
+    except EmptyPage:
+        escorts = paginator.page(paginator.num_pages)
+
+    return render (request, "portfolio-ciudad.html", {
+        'provincias':provincias,
+        'provinciaSeleccionada': provinciaSeleccionada,
+        'ciudadSeleccionada': ciudadSeleccionada,
+        'escorts':escorts,
+    })
+
+
 
 def portfolio_escort(request,pk):
     user=User.objects.get(username=pk)

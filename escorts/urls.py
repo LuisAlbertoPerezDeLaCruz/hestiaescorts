@@ -15,7 +15,8 @@ urlpatterns = [
     url(r'^pricing.html$', views.pricing, name='pricing'),
     url(r'^services.html$', views.services, name='services'),
     url(r'^sidebar.html$', views.sidebar, name='sidebar'),
-    url(r'^provincia-(?P<pk>[\w\-]+).html$', views.portfolio_3_col, name='provincia'),
+    url(r'^provincia-(?P<pk>[\w\-]+).html$', views.portfolio_provincia, name='portfolio_provincia'),
+    url(r'^ciudad', views.ciudad, name='ciudad'),
     url(r'^portfolio-(?P<pk>[\w\-]+)$', views.portfolio_escort, name='portfolio'),
     url(r'^conf-escort-(?P<pk>[\w\-]+)$', views.conf_escort, name='conf-escort'),
 ]
