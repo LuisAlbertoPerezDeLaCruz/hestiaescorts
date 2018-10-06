@@ -2,6 +2,7 @@
 
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load filtrosEspeciales %}
 {% block contenido %}
 
     <script>
@@ -96,7 +97,7 @@
                                          alt="{{ escort.es_nombre }}">
                                 </a>
                             </h4>
-                            <p class="card-text">{{ escort.es_descripcion }}</p>
+                            <p class="card-text">{{ escort.es_descripcion|truncatereadmore:15 }}</p>
                         </div>
                     </div>
                 </div>

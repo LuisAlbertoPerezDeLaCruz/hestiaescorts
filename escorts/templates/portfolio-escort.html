@@ -21,11 +21,12 @@
             <li class="breadcrumb-item active">{{ escortSeleccionada.es_slug }}</li>
         </ol>
 
+
         <!-- Portfolio Item Row -->
         <div class="row">
 
             <div class="col-md-8">
-                <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_1 %}"
+                <img class="img-fluid thumbnail zoom" src="{% static escortSeleccionada.full_ruta_foto_1 %}"
                      alt="{{ escortSeleccionada.es_nombre }}">
             </div>
 
@@ -52,7 +53,7 @@
             <div class="col-md-3 col-sm-6 mb-4">
                 <a href="#">
                     {% if escortSeleccionada.full_ruta_foto_2 %}
-                        <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_2 %}"
+                        <img class="img-fluid thumbnail zoom" src="{% static escortSeleccionada.full_ruta_foto_2 %}"
                              alt="{{ escortSeleccionada.es_nombre }}">
                     {% else %}
                         <img class="img-fluid" src="http://placehold.it/500x300" alt="">
@@ -62,7 +63,7 @@
             <div class="col-md-3 col-sm-6 mb-4">
                 <a href="#">
                     {% if escortSeleccionada.full_ruta_foto_3 %}
-                        <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_3 %}"
+                        <img class="img-fluid thumbnail zoom" src="{% static escortSeleccionada.full_ruta_foto_3 %}"
                              alt="{{ escortSeleccionada.es_nombre }}">
                     {% else %}
                         <img class="img-fluid" src="http://placehold.it/500x300" alt="">
@@ -72,7 +73,7 @@
             <div class="col-md-3 col-sm-6 mb-4">
                 <a href="#">
                     {% if escortSeleccionada.full_ruta_foto_4 %}
-                        <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_4 %}"
+                        <img class="img-fluid thumbnail zoom" src="{% static escortSeleccionada.full_ruta_foto_4 %}"
                              alt="{{ escortSeleccionada.es_nombre }}">
                     {% else %}
                         <img class="img-fluid" src="http://placehold.it/500x300" alt="">
@@ -82,7 +83,7 @@
             <div class="col-md-3 col-sm-6 mb-4">
                 <a href="#">
                     {% if escortSeleccionada.full_ruta_foto_5 %}
-                        <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_5 %}"
+                        <img class="img-fluid thumbnail zoom" src="{% static escortSeleccionada.full_ruta_foto_5 %}"
                              alt="{{ escortSeleccionada.es_nombre }}">
                     {% else %}
                         <img class="img-fluid" src="http://placehold.it/500x300" alt="">

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import template
+from django.utils.text import Truncator
 register = template.Library()
 
 def phone_number(number):
@@ -10,3 +11,19 @@ def phone_number(number):
     return '(' + first + ')' + ' ' + second + '-' + third
 
 register.filter('phone_number', phone_number)
+
+def truncatereadmore(value, arg):
+    """
+    Truncates a string after a certain number of words.
+
+    Argument: Number of words to truncate after.
+
+    Newlines within the string are removed.
+    """
+    try:
+        length = arg
+    except ValueError: # Invalid literal for int().
+        return value # Fail silently.
+    return Truncator(value).words(length, truncate=' ...')
+
+register.filter('truncatereadmore', truncatereadmore)
