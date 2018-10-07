@@ -5,7 +5,7 @@
 
 {% block contenido %}
 
-    <div class="container">
+    <div id='idDivBase' class="container">
 
         <!-- Page Heading/Breadcrumbs -->
         <h1 class="mt-4 mb-3">{{ escortSeleccionada.es_nombre }}
@@ -36,12 +36,39 @@
             <div class="col-md-4">
                 <h3 class="my-3">Descripción</h3>
                 <p>{{ escortSeleccionada.es_descripcion }}</p>
+                <hr>
+                <h3 class="my-3">Características</h3>
+                <ul>
+                    {% for caracteristica in perfil.escortCaracteristicas %}
+
+                        <li>
+                            <i>
+                                {{ caracteristica.caracteristicaNombre}}&nbsp;
+                            </i>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+                <hr>
                 <h3 class="my-3">Servicios</h3>
                 <ul>
-                    <li>Lorem Ipsum</li>
-                    <li>Dolor Sit Amet</li>
-                    <li>Consectetur</li>
-                    <li>Adipiscing Elit</li>
+                    {% for servicio in perfil.escortServicios %}
+
+                        {% ifchanged servicio.servicioNombre %}
+                            </ul>
+                            <li>
+                                <b>{{ servicio.servicioNombre }}</b>&nbsp;
+                            </li>
+                            <ul>
+                        {% endifchanged %}
+
+                        <li>
+                            <i>{{ servicio.servicioDuracion }}&nbsp;
+                                &#8364;&nbsp;{{ servicio.servicioPrecio }};&nbsp
+                            </i>
+                        </li>
+
+                    {% endfor %}
                 </ul>
             </div>
 

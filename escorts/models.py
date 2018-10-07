@@ -150,30 +150,6 @@ class Escort(models.Model):
     full_ruta_foto_5 = property(_get_full_ruta_foto_5)
 
 
-class Servicios(models.Model):
-    sv_pais = models.ForeignKey('Pais', blank=True, null=True)
-    sv_nombre = models.CharField(max_length=30)
-
-    def __str__(self):
-        return smart_str(self.sv_nombre)
-
-
-class Duracion(models.Model):
-    du_nombre = models.CharField(max_length=30)
-
-    def __str__(self):
-        return smart_str(self.du_nombre)
-
-
-class ServiciosEscort(models.Model):
-    se_servicio = models.ForeignKey('Servicios', blank=True, null=True)
-    se_duracion = models.ForeignKey('Duracion', blank=True, null=True)
-    se_precio = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-
-    def __str__(self):
-        return "%s %s" % (smart_str(self.se_servicio), smart_str(self.se_duracion.du_nombre))
-
-
 class HestiaInfo(models.Model):
     hi_carrusel_cantidad = models.IntegerField(default=3)
     hi_carrusel_1_titulo = models.CharField(max_length=100, null=True, blank=True, default='')
@@ -203,3 +179,41 @@ class HestiaInfo(models.Model):
         return fotosCarrusel
 
     fotos_carrusel = property(_get_full_ruta_foto_carrusel)
+
+class Servicios(models.Model):
+    sv_pais = models.ForeignKey('Pais', blank=True, null=True)
+    sv_nombre = models.CharField(max_length=30)
+
+    def __str__(self):
+        return smart_str(self.sv_nombre)
+
+
+class Duracion(models.Model):
+    du_nombre = models.CharField(max_length=30)
+
+    def __str__(self):
+        return smart_str(self.du_nombre)
+
+
+class ServiciosEscort(models.Model):
+    se_escort=models.ForeignKey('Escort', blank=True, null=True)
+    se_servicio = models.ForeignKey('Servicios', blank=True, null=True)
+    se_duracion = models.ForeignKey('Duracion', blank=True, null=True)
+    se_precio = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
+    def __str__(self):
+        return "%s %s %s" % (smart_str(self.se_servicio.sv_nombre), smart_str(self.se_duracion.du_nombre), smart_str(self.se_duracion.du_precio))
+
+class Caracteristica(models.Model):
+    ca_pais = models.ForeignKey('Pais', blank=True, null=True)
+    ca_nombre = models.CharField(max_length=30)
+
+    def __str__(self):
+        return smart_str(self.ca_nombre)
+
+class CaracteristicasEscort(models.Model):
+    ce_escort = models.ForeignKey('Escort', blank=True, null=True)
+    ce_caracteristica=models.ForeignKey('Caracteristica', blank=True, null=True)
+
+    def __str__(self):
+        return "%s %s" % (smart_str(self.ce_caracteristica.ca_nombre), smart_str(self.ce_escort.es_nombre))

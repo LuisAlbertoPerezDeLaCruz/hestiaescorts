@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render,redirect
 from .models import *
-from django.contrib.auth import *
+from .clases import *
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -117,10 +117,12 @@ def portfolio_escort(request,pk):
     user=User.objects.get(username=pk)
     escortSeleccionada=Escort.objects.get(es_user=user)
     provinciaSeleccionada=Provincia.objects.get(pk=escortSeleccionada.es_provincia.pk)
+    perfil=PerfilEscort(escortSeleccionada.id)
     return render(request, "portfolio-escort.html", {
         'provincias': provincias,
         'provinciaSeleccionada': provinciaSeleccionada,
         'escortSeleccionada':escortSeleccionada,
+        'perfil':perfil,
     })
 
 def conf_escort(request,pk):
@@ -128,7 +130,9 @@ def conf_escort(request,pk):
         return render(request, "conf-escort.html", {'provincias':provincias})
     user=User.objects.get(username=pk)
     escortSeleccionada=Escort.objects.get(es_user=user)
+    perfil=PerfilEscort(escortSeleccionada.id)
     return render(request, "conf-escort.html", {
         'provincias': provincias,
         'escortSeleccionada':escortSeleccionada,
+        'perfil': perfil,
     })
