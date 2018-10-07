@@ -2,6 +2,7 @@
 
 {% extends 'base.html' %}
 {% load staticfiles %}
+
 {% block contenido %}
 
     <div class="container">
@@ -26,12 +27,14 @@
         <div class="row">
 
             <div class="col-md-8">
-                <img class="img-fluid thumbnail zoom" src="{% static escortSeleccionada.full_ruta_foto_1 %}"
-                     alt="{{ escortSeleccionada.es_nombre }}">
+                <a href="#">
+                    <img id="img01" class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_1 %}" width="80%"
+                         alt="{{ escortSeleccionada.es_nombre }}">
+                </a>
             </div>
 
             <div class="col-md-4">
-                <h3 class="my-3">Project Description</h3>
+                <h3 class="my-3">Descripción</h3>
                 <p>{{ escortSeleccionada.es_descripcion }}</p>
                 <h3 class="my-3">Servicios</h3>
                 <ul>
@@ -46,14 +49,14 @@
         <!-- /.row -->
 
         <!-- Related Projects Row -->
-        <h3 class="my-4">Related Projects</h3>
+        <h3 class="my-4">Fotos</h3>
 
         <div class="row">
 
             <div class="col-md-3 col-sm-6 mb-4">
                 <a href="#">
                     {% if escortSeleccionada.full_ruta_foto_2 %}
-                        <img class="img-fluid thumbnail zoom" src="{% static escortSeleccionada.full_ruta_foto_2 %}"
+                        <img id="img02" class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_2 %}"
                              alt="{{ escortSeleccionada.es_nombre }}">
                     {% else %}
                         <img class="img-fluid" src="http://placehold.it/500x300" alt="">
@@ -63,7 +66,7 @@
             <div class="col-md-3 col-sm-6 mb-4">
                 <a href="#">
                     {% if escortSeleccionada.full_ruta_foto_3 %}
-                        <img class="img-fluid thumbnail zoom" src="{% static escortSeleccionada.full_ruta_foto_3 %}"
+                        <img id="img03" class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_3 %}"
                              alt="{{ escortSeleccionada.es_nombre }}">
                     {% else %}
                         <img class="img-fluid" src="http://placehold.it/500x300" alt="">
@@ -73,7 +76,7 @@
             <div class="col-md-3 col-sm-6 mb-4">
                 <a href="#">
                     {% if escortSeleccionada.full_ruta_foto_4 %}
-                        <img class="img-fluid thumbnail zoom" src="{% static escortSeleccionada.full_ruta_foto_4 %}"
+                        <img id="img04" class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_4 %}"
                              alt="{{ escortSeleccionada.es_nombre }}">
                     {% else %}
                         <img class="img-fluid" src="http://placehold.it/500x300" alt="">
@@ -83,7 +86,7 @@
             <div class="col-md-3 col-sm-6 mb-4">
                 <a href="#">
                     {% if escortSeleccionada.full_ruta_foto_5 %}
-                        <img class="img-fluid thumbnail zoom" src="{% static escortSeleccionada.full_ruta_foto_5 %}"
+                        <img id="img05" class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_5 %}"
                              alt="{{ escortSeleccionada.es_nombre }}">
                     {% else %}
                         <img class="img-fluid" src="http://placehold.it/500x300" alt="">
@@ -91,9 +94,43 @@
                 </a>
             </div>
         </div>
-        <!-- /.row -->
 
     </div>
+
+    <script>
+
+        function preparaZoomImagen(imagenId) {
+            // Get the modal
+            var modal = document.getElementById('myModal');
+
+            // Get the image and insert it inside the modal - use its "alt" text as a caption
+            var img = document.getElementById(imagenId);
+            var modalImg = document.getElementById("imgEnModal");
+            var captionText = document.getElementById("caption");
+            img.onclick = function () {
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+            }
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+        }
+
+        preparaZoomImagen('img01');
+        preparaZoomImagen('img02');
+        preparaZoomImagen('img03');
+        preparaZoomImagen('img04');
+        preparaZoomImagen('img05');
+
+
+    </script>
+
 
 {% endblock contenido %}
 

@@ -18,18 +18,8 @@
     <!-- Bootstrap core CSS -->
     <link href="{% static "vendor/bootstrap/css/bootstrap.css" %}" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="{% static "css/modern-business.css" %}" rel="stylesheet">
+    <link href="{% static "css/hestia-escorts.css" %}" rel="stylesheet">
 
-    <link href="{% static "css/thumb_nail_zoom.css" %}" rel="stylesheet">
-
-    <style>
-        .scrollable-menu {
-            height: auto;
-            width: auto;
-            max-height: 400px;
-            overflow-x: hidden;
-        }
-    </style>
 
 </head>
 
@@ -116,8 +106,18 @@
                     </li>
                 {% endif %}
             </ul>
+
         </div>
+
     </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="imgEnModal">
+        <div id="caption"></div>
+    </div>
+
 </nav>
 
 {% block header %}
