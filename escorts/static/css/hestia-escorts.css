@@ -1,3 +1,12 @@
+.hestiaDisabled{
+    pointer-events:none;
+    opacity:0.6;
+}
+
+.scrollDiv {
+    height: 220px;
+    overflow-y: scroll
+}
 
 body {
     padding-top: 54px;

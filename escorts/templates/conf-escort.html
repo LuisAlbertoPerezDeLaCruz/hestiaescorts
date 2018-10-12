@@ -10,7 +10,7 @@
     <div class="container">
 
         <!-- Page Heading/Breadcrumbs -->
-        <br>
+        <br><br>
         <h1 class="mt-4 mb-3">Configuración de la Información
             <small> - {{ user.profile.full_name }} </small>
         </h1>
@@ -104,9 +104,9 @@
                             <hr>
                             <h3 class="my-3">Servicios</h3>
                             <hr>
-                            <div id="idDivScroll" class="scrollDiv">
+                            <div id="idDivScroll" class="scrollDiv" >
 
-                                <div class="list-group">
+                                <div class="list-group ">
                                     {% for servicio in perfil.escortServicios %}
                                         <a style="cursor:pointer" id="idSrv_{{ servicio.id }}"
                                            onclick="muestraServicioEdit('{{ servicio.servicioId }}','{{ servicio.duracionId }}','{{ servicio.servicioPrecio }}');"
@@ -126,7 +126,54 @@
                     <br>
 
                     <div class="d-md-none"> <!-- solo para mobiles y tablets -->
-                        Solo para moviles y tablets
+
+                        <div class="servicioEdit titulosServicioEdit" style="display: none">
+                            <div class="row">
+                                <div class="offset-1 col-xs-4"><b>Tipo Servicio:&nbsp</b></div>
+                                <div class="col-xs-7">
+                                    <select name="idServicioEdit" id="idServicioEdit">
+                                        {% for servicio in servicios %}
+                                            <option value="{{ servicio.id }}">{{ servicio.sv_nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="offset-1 col-xs-4"><b>Duración:&nbsp</b></div>
+                                <div class="col-xs-7">
+                                    <select name="idDuracionEdit" id="idDuracionEdit">
+                                        {% for duracion in duraciones %}
+                                            <option value="{{ duracion.id }}">{{ duracion.du_nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="offset-1 col-xs-4"><b>Tarifa (&#8364;):&nbsp</b></div>
+                                <div class="col-xs-7">
+                                    <input id="idPrecioEdit" type="text" maxlength="6" size="6" value="1200.00">
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="offset-1 col-xs-4"><b>Acciones:&nbsp</b></div>
+                                <div class="col-xs-7">
+                                    <i onclick="ejecutarAccion('aceptar')" style="cursor: pointer"
+                                       class="fa fa-check"></i>
+                                    &nbsp;
+                                    <i onclick="ejecutarAccion('rechazar')" style="cursor: pointer"
+                                       class="fa fa-undo"></i>
+                                    &nbsp;
+                                    <i onclick="ejecutarAccion('eliminar')" style="cursor: pointer"
+                                       class="fa fa-trash"></i>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+
                     </div>
 
                     <div class="d-none d-md-block"><!-- solo para laptops y desktops -->
@@ -231,7 +278,6 @@
 
     <script>
         function muestraServicioEdit(servicioId, duracionId, precio) {
-            console.log('precio:' + precio);
             $('#idDivScroll').addClass('hestiaDisabled');
             $('.servicioEdit').show();
             $('#idServicioEdit').val(servicioId);
