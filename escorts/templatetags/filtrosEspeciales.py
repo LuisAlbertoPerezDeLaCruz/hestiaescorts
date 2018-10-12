@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import template
 from django.utils.text import Truncator
+from ..models import *
 register = template.Library()
 
 def phone_number(number):
@@ -27,3 +28,8 @@ def truncatereadmore(value, arg):
     return Truncator(value).words(length, truncate=' ...')
 
 register.filter('truncatereadmore', truncatereadmore)
+
+@register.simple_tag
+def tieneEstaCaracteristica(escortId,caracteristicaId):
+    return CaracteristicasEscort.objects.filter(ce_escort_id=escortId,ce_caracteristica_id=caracteristicaId).exists()
+

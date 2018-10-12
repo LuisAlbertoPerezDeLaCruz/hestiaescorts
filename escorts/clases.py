@@ -33,6 +33,7 @@ class PerfilEscort:
         aca=[]
         for caracteristica in caracteristicas:
             cJson={}
+            cJson['caracteristicaId']=caracteristica.id
             cJson['caracteristicaNombre']=caracteristica.ce_caracteristica.ca_nombre
             aca.append(cJson)
         self.escortCaracteristicas = aca
@@ -41,8 +42,11 @@ class PerfilEscort:
         asv=[]
         for servicio in servicios:
             sJson={}
-            sJson['servicioNombre']=servicio.se_servicio.sv_nombre
+            sJson['servicioEscortId']=servicio.id
+            sJson['servicioId']=servicio.se_servicio.id;
+            sJson['servicioNombre'] = servicio.se_servicio.sv_nombre
             sJson['servicioDuracion']=servicio.se_duracion.du_nombre
+            sJson['duracionId']=servicio.se_duracion.id
             sJson['servicioPrecio']=servicio.se_precio
             asv.append(sJson)
         self.escortServicios = asv

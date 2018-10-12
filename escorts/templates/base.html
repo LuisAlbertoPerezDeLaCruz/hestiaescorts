@@ -19,6 +19,10 @@
     <link href="{% static "vendor/bootstrap/css/bootstrap.css" %}" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="{% static "css/hestia-escorts.css" %}" rel="stylesheet">
+    <!-- Multi Select CSS -->
+    <link href="{% static "vendor/multi-select/css/multi-select.css" %}" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="{% static "font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
 
 
 </head>
@@ -28,11 +32,10 @@
 <!-- Navigation -->
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="index.html">Hestia Escorts
-            {% if user.is_authenticated %}
-                <br><sup>logon:{{ user.username }}</sup>
-            {% endif %}
+        <a class="navbar-brand" href="index.html">
+            <img src="{% static 'imagenes/Logo-HestiaEscorts-01.svg' %}" style="width: 150px">
         </a>
+
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                 data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -73,7 +76,11 @@
                 {% endif %}
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="conf-escort-{{ user.username }}">Mi Información</a>
+                        <a class="nav-link" href="conf-escort-{{ user.username }}">Mi Información
+{% comment %}                            {% if user.is_authenticated %}
+                                <br><sup>logon:{{ user.username }}</sup>
+                            {% endif %}{% endcomment %}
+                        </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
@@ -123,6 +130,9 @@
 {% block header %}
 {% endblock header %}
 
+<!-- Bootstrap core JavaScript -->
+<script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
+<script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
 
 {% block contenido %}
 {% endblock contenido %}
@@ -134,10 +144,6 @@
     </div>
     <!-- /.container -->
 </footer>
-
-<!-- Bootstrap core JavaScript -->
-<script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
-<script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
 
 </body>
 

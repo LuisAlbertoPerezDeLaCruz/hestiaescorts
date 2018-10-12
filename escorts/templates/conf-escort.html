@@ -9,130 +9,241 @@
 
     <div class="container">
 
-      <!-- Page Heading/Breadcrumbs -->
-      <br>
-      <h1 class="mt-4 mb-3">Configuración de la Información
-        <small> - {{ user.profile.full_name }} </small>
-      </h1>
+        <!-- Page Heading/Breadcrumbs -->
+        <br>
+        <h1 class="mt-4 mb-3">Configuración de la Información
+            <small> - {{ user.profile.full_name }} </small>
+        </h1>
 
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.html">Home</a>
-        </li>
-        <li class="breadcrumb-item active">Configuración
-        </li>
-      </ol>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="index.html">Home</a>
+            </li>
+            <li class="breadcrumb-item active">Configuración
+            </li>
+        </ol>
 
-      <div class="row">
-        <div class="col-lg-8 mb-4">
-          <h4>Entre sus datos</h4>
-          <br>
-          <form name="sentMessage" action="conf-escort.html" id="contactForm" novalidate>
-            <div class="control-group form-group">
-              <div class="controls">
-                <label>Nombre:</label>
-                <input type="text" class="form-control" id="nombre" value="{{ escortSeleccionada.es_nombre }}" required data-validation-required-message="Entre su nombre.">
-                <p class="help-block"></p>
-              </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <h4>Entre sus datos</h4>
+                <br>
+                <form name="sentMessage" action="conf-escort.html" id="contactForm" novalidate>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <label>Nombre:</label>
+                            <input type="text" class="form-control" id="nombre"
+                                   value="{{ escortSeleccionada.es_nombre }}" required
+                                   data-validation-required-message="Entre su nombre.">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <label>Apellido:</label>
+                            <input type="text" class="form-control" id="apellido"
+                                   value="{{ escortSeleccionada.es_apellido }}" required
+                                   data-validation-required-message="Entre su apellido.">
+                            <p class="help-block"></p>
+                        </div>
+                    </div>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <label>Teléfono:</label>
+                            <input type="tel" class="form-control" id=telefono"
+                                   value="{{ escortSeleccionada.es_telefono|phone_number }}" required
+                                   data-validation-required-message="Entre su teléfono.">
+                        </div>
+                    </div>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <label>Email:</label>
+                            <input type="email" class="form-control" id="email"
+                                   value="{{ escortSeleccionada.es_correo }}" required
+                                   data-validation-required-message="Entre su email.">
+                        </div>
+                    </div>
+                    <div class="control-group form-group">
+                        <div class="controls">
+                            <label>Su descripción:</label>
+                            <textarea rows="10" cols="100" class="form-control" id="message" required
+                                      data-validation-required-message="Entre su descripción personal" maxlength="999"
+                                      style="resize:none">{{ escortSeleccionada.es_descripcion }}</textarea>
+                        </div>
+                    </div>
+
+                    <!-- Related Projects Row -->
+                    <h3 class="my-4">Fotos</h3>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_1 %}"
+                                 alt="{{ escortSeleccionada.es_nombre }}">
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <h3 class="my-3">Características</h3>
+
+                            <ul>
+                                {% for caracteristica in caracteristicas %}
+
+                                    {% tieneEstaCaracteristica escortSeleccionada.id caracteristica.id as siTiene %}
+
+                                    <li>
+                                        <i>
+                                            {{ caracteristica.ca_nombre }}&nbsp;
+                                            <input {% if siTiene %}checked{% endif %}
+                                                   id="caracteristica_{{ caracteristica.id }}" type="checkbox">
+                                        </i>
+                                    </li>
+
+                                {% endfor %}
+                            </ul>
+                            <hr>
+                            <h3 class="my-3">Servicios</h3>
+                            <hr>
+                            <div id="idDivScroll" class="scrollDiv">
+
+                                <div class="list-group">
+                                    {% for servicio in perfil.escortServicios %}
+                                        <a style="cursor:pointer" id="idSrv_{{ servicio.id }}"
+                                           onclick="muestraServicioEdit('{{ servicio.servicioId }}','{{ servicio.duracionId }}','{{ servicio.servicioPrecio }}');"
+                                           class="list-group-item list-group-item-action">
+                                            {{ servicio.servicioNombre }}&nbsp; - {{ servicio.servicioDuracion }}&nbsp;
+                                            - &nbsp;&#8364;{{ servicio.servicioPrecio }}&nbsp;
+                                        </a>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                    <div class="d-md-none"> <!-- solo para mobiles y tablets -->
+                        Solo para moviles y tablets
+                    </div>
+
+                    <div class="d-none d-md-block"><!-- solo para laptops y desktops -->
+
+                        <div class="row servicioEdit titulosServicioEdit" style="display: none">
+                            <div class="offset-2 col-md-3"><b>Tipo Servicio</b></div>
+                            <div class="col-md-3"><b>Duración</b></div>
+                            <div class="col-md-2"><b>Tarifa (&#8364;)</b></div>
+                            <div class="col-md-2"><b>Acciones</b></div>
+                        </div>
+
+                        <div class="row servicioEdit detalleServicioEdit hidden-sm-down" style="display: none">
+
+                            <div class="offset-2 col-md-3">
+                                <select name="idServicioEdit" id="idServicioEdit">
+                                    {% for servicio in servicios %}
+                                        <option value="{{ servicio.id }}">{{ servicio.sv_nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select name="idDuracionEdit" id="idDuracionEdit">
+                                    {% for duracion in duraciones %}
+                                        <option value="{{ duracion.id }}">{{ duracion.du_nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <input id="idPrecioEdit" type="text" maxlength="6" size="6" value="1200.00">
+                            </div>
+                            <div class="col-md-2">
+                                <i onclick="ejecutarAccion('aceptar')" style="cursor: pointer" class="fa fa-check"></i>
+                                &nbsp;
+                                <i onclick="ejecutarAccion('rechazar')" style="cursor: pointer" class="fa fa-undo"></i>
+                                &nbsp;
+                                <i onclick="ejecutarAccion('eliminar')" style="cursor: pointer" class="fa fa-trash"></i>
+                                &nbsp;
+                            </div>
+                        </div>
+
+                    </div>
+                    <br>
+                    <br>
+
+                    <div class="row">
+
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <a href="#">
+                                {% if escortSeleccionada.full_ruta_foto_2 %}
+                                    <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_2 %}"
+                                         alt="{{ escortSeleccionada.es_nombre }}">
+                                {% else %}
+                                    <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <a href="#">
+                                {% if escortSeleccionada.full_ruta_foto_3 %}
+                                    <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_3 %}"
+                                         alt="{{ escortSeleccionada.es_nombre }}">
+                                {% else %}
+                                    <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <a href="#">
+                                {% if escortSeleccionada.full_ruta_foto_4 %}
+                                    <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_4 %}"
+                                         alt="{{ escortSeleccionada.es_nombre }}">
+                                {% else %}
+                                    <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <a href="#">
+                                {% if escortSeleccionada.full_ruta_foto_5 %}
+                                    <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_5 %}"
+                                         alt="{{ escortSeleccionada.es_nombre }}">
+                                {% else %}
+                                    <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+                                {% endif %}
+                            </a>
+                        </div>
+
+                    </div>
+                    <!-- /.row -->
+
+                    <div id="success"></div>
+                    <!-- For success/fail messages -->
+                    <br>
+                    <button type="submit" class="btn btn-primary" id="sendConfiguracionButton">Guardar</button>
+                    <br><br>
+                </form>
             </div>
-            <div class="control-group form-group">
-              <div class="controls">
-                <label>Apellido:</label>
-                <input type="text" class="form-control" id="apellido" value="{{ escortSeleccionada.es_apellido }}" required data-validation-required-message="Entre su apellido.">
-                <p class="help-block"></p>
-              </div>
-            </div>
-            <div class="control-group form-group">
-              <div class="controls">
-                <label>Teléfono:</label>
-                <input type="tel" class="form-control" id=telefono" value="{{ escortSeleccionada.es_telefono|phone_number }}" required data-validation-required-message="Entre su teléfono.">
-              </div>
-            </div>
-            <div class="control-group form-group">
-              <div class="controls">
-                <label>Email:</label>
-                <input type="email" class="form-control" id="email" value="{{ escortSeleccionada.es_correo }}" required data-validation-required-message="Entre su email.">
-              </div>
-            </div>
-            <div class="control-group form-group">
-              <div class="controls">
-                <label>Su descripción:</label>
-                <textarea rows="10" cols="100" class="form-control" id="message" required data-validation-required-message="Entre su descripción personal" maxlength="999" style="resize:none">{{ escortSeleccionada.es_descripcion }}</textarea>
-              </div>
-            </div>
-
-      <!-- Related Projects Row -->
-      <h3 class="my-4">Fotos</h3>
-
-      <div class="row">
-
-        <div class="col-md-8">
-
-          <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_1 %}"  alt="{{ escortSeleccionada.es_nombre }}">
 
         </div>
-
-      </div>
-
-      <br>
-
-      <div class="row">
-
-            <div class="col-md-3 col-sm-6 mb-4">
-                <a href="#">
-                    {% if escortSeleccionada.full_ruta_foto_2 %}
-                        <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_2 %}"
-                             alt="{{ escortSeleccionada.es_nombre }}">
-                    {% else %}
-                        <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-                    {% endif %}
-                </a>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <a href="#">
-                    {% if escortSeleccionada.full_ruta_foto_3 %}
-                        <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_3 %}"
-                             alt="{{ escortSeleccionada.es_nombre }}">
-                    {% else %}
-                        <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-                    {% endif %}
-                </a>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <a href="#">
-                    {% if escortSeleccionada.full_ruta_foto_4 %}
-                        <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_4 %}"
-                             alt="{{ escortSeleccionada.es_nombre }}">
-                    {% else %}
-                        <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-                    {% endif %}
-                </a>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <a href="#">
-                    {% if escortSeleccionada.full_ruta_foto_5 %}
-                        <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_5 %}"
-                             alt="{{ escortSeleccionada.es_nombre }}">
-                    {% else %}
-                        <img class="img-fluid" src="http://placehold.it/500x300" alt="">
-                    {% endif %}
-                </a>
-            </div>
-
-      </div>
-      <!-- /.row -->
-
-            <div id="success"></div>
-            <!-- For success/fail messages -->
-            <br>
-            <button type="submit" class="btn btn-primary" id="sendConfiguracionButton">Guardar</button>
-            <br>
-          </form>
-        </div>
-
-      </div>
 
     </div>
+
+    <script>
+        function muestraServicioEdit(servicioId, duracionId, precio) {
+            console.log('precio:' + precio);
+            $('#idDivScroll').addClass('hestiaDisabled');
+            $('.servicioEdit').show();
+            $('#idServicioEdit').val(servicioId);
+            $('#idDuracionEdit').val(duracionId);
+            $('#idPrecioEdit').val(precio);
+        }
+
+        function ejecutarAccion() {
+            $('#idDivScroll').removeClass('hestiaDisabled');
+            $('.servicioEdit').hide();
+        }
+    </script>
 
 {% endblock contenido %}
 

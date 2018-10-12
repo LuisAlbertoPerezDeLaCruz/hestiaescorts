@@ -135,4 +135,7 @@ def conf_escort(request,pk):
         'provincias': provincias,
         'escortSeleccionada':escortSeleccionada,
         'perfil': perfil,
+        'caracteristicas':Caracteristica.objects.all(),
+        'servicios': Servicios.objects.all(),
+        'duraciones':Duracion.objects.all(),
     })
