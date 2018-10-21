@@ -2,8 +2,11 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render,redirect
+from django.http import HttpResponse
+from django.http import JsonResponse
 from .models import *
 from .clases import *
+import json
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -139,3 +142,60 @@ def conf_escort(request,pk):
         'servicios': Servicios.objects.all(),
         'duraciones':Duracion.objects.all(),
     })
+
+def escort_update_info(request):
+    escortId=request.GET['escortId']
+    escort=Escort.objects.get(id=escortId)
+    nombreIn=request.GET['nombre']
+    apellidoIn=request.GET['apellido']
+    telefonoIn = request.GET['telefono']
+    telefonoIn=filter( lambda x: x in '0123456789', telefonoIn )
+    emailIn = request.GET['email']
+    descripcionIn = request.GET['descripcion']
+    caracteristicasIn = request.GET['caracteristicas']
+    caracteristicasIn=caracteristicasIn.split(',')
+    caracteristicasEscort=CaracteristicasEscort.objects.filter(ce_escort=escort)
+    for caracteristicaEscort in caracteristicasEscort:
+        if str(caracteristicaEscort.ce_caracteristica_id) not in caracteristicasIn:
+            caracteristicaEscort.delete()
+
+    for caracteristicaIn in caracteristicasIn:
+        try:
+            caracteristicaEscort=CaracteristicasEscort.objects.get(ce_escort=escort,ce_caracteristica_id=caracteristicaIn)
+        except:
+            CaracteristicasEscort.objects.create(ce_escort=escort,ce_caracteristica_id=caracteristicaIn)
+
+    servicios=request.GET['servicios']
+    serviciosJson = json.loads(servicios)
+
+    ServiciosEscort.objects.filter(se_escort=escort).delete()
+
+    for servicio in serviciosJson:
+        if servicio != {}:
+            servicioEscort=ServiciosEscort.objects.create(se_escort=escort,se_servicio=Servicios.objects.get(sv_nombre=servicio['nombre']),se_duracion=Duracion.objects.get(du_nombre=servicio['duracion']),se_precio=servicio['precio'])
+
+    escort.es_nombre=nombreIn
+    escort.es_apellido=apellidoIn
+    escort.es_telefono=telefonoIn
+    escort.es_correo=emailIn
+    escort.es_descripcion=descripcionIn
+
+    escort.save()
+
+    return JsonResponse({})
+
+def escort_upload_images(request):
+    from django.shortcuts import render
+    from django.conf import settings
+    from django.core.files.storage import FileSystemStorage
+
+    if request.method == 'POST' and request.FILES['myimage']:
+        myimage = request.FILES['myimage']
+        fs = FileSystemStorage()
+        filename = fs.save(myimage.name, myimage)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'conf-escort.html', {
+            'uploaded_file_url': uploaded_file_url
+        })
+
+    return render(request, 'conf-escort.html')

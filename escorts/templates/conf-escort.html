@@ -7,6 +7,86 @@
 
 {% block contenido %}
 
+    <script>
+        $(document).ready(function () {
+
+            $('.precioEditD').change(function () {
+                chequearEdicionServicios();
+            });
+
+            $('.duracionEditD').change(function () {
+                chequearEdicionServicios();
+            });
+
+            $('.servicioEditD').change(function () {
+                chequearEdicionServicios();
+            });
+
+            $('.precioEditM').change(function () {
+                chequearEdicionServicios();
+            });
+
+            $('.duracionEditM').change(function () {
+                chequearEdicionServicios();
+            });
+
+            $('.servicioEditM').change(function () {
+                chequearEdicionServicios();
+            });
+
+            function chequearEdicionServicios() {
+                var mobile = null;
+                if ($(window).width() < 768)
+                    mobile = true;
+                else
+                    mobile = false;
+                var precio = null;
+                var servicio = null;
+                var duracion = null;
+                if (mobile) {
+                    precio = $('.precioEditM').val();
+                    servicio = $('.servicioEditM').val();
+                    duracion = $('.duracionEditM').val();
+                } else {
+                    precio = $('.precioEditD').val();
+                    servicio = $('.servicioEditD').val();
+                    duracion = $('.duracionEditD').val();
+                }
+                if (servicio == null % duracion == null % precio == '') {
+                    $('.aceptar').addClass('hestiaDisabled');
+                } else {
+                    $('.aceptar').removeClass('hestiaDisabled');
+                }
+
+            }
+
+            /* Get the checkboxes values based on the class attached to each check box */
+            $("#buttonClass").click(function () {
+                getValueUsingClass();
+            });
+
+
+        });
+
+        function getValueUsingClass() {
+            /* declare an checkbox array */
+            var chkArray = [];
+
+            /* look for all checkboes that have a class 'chk' attached to it and check if it was checked */
+            $(".chk:checked").each(function () {
+                chkArray.push($(this).val());
+            });
+
+            /* we join the array separated by the comma */
+            var selected;
+            selected = chkArray.join(',');
+
+            return selected;
+        }
+
+    </script>
+
+
     <div class="container">
 
         <!-- Page Heading/Breadcrumbs -->
@@ -27,7 +107,8 @@
             <div class="col-xl-12">
                 <h4>Entre sus datos</h4>
                 <br>
-                <form name="sentMessage" action="conf-escort.html" id="contactForm" novalidate>
+                <form id="contactForm" action='escort-upload-images' method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Nombre:</label>
@@ -49,7 +130,7 @@
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Teléfono:</label>
-                            <input type="tel" class="form-control" id=telefono"
+                            <input type="tel" class="form-control" id="telefono"
                                    value="{{ escortSeleccionada.es_telefono|phone_number }}" required
                                    data-validation-required-message="Entre su teléfono.">
                         </div>
@@ -65,7 +146,7 @@
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Su descripción:</label>
-                            <textarea rows="10" cols="100" class="form-control" id="message" required
+                            <textarea rows="10" cols="100" class="form-control" id="descripcion" required
                                       data-validation-required-message="Entre su descripción personal" maxlength="999"
                                       style="resize:none">{{ escortSeleccionada.es_descripcion }}</textarea>
                         </div>
@@ -86,35 +167,52 @@
                         <div class="col-md-6">
                             <h3 class="my-3">Características</h3>
 
-                            <ul>
+                            <div id="checkboxlist">
                                 {% for caracteristica in caracteristicas %}
-
                                     {% tieneEstaCaracteristica escortSeleccionada.id caracteristica.id as siTiene %}
-
-                                    <li>
-                                        <i>
-                                            {{ caracteristica.ca_nombre }}&nbsp;
-                                            <input {% if siTiene %}checked{% endif %}
-                                                   id="caracteristica_{{ caracteristica.id }}" type="checkbox">
-                                        </i>
-                                    </li>
-
+                                    <div>
+                                        <input type="checkbox" value="{{ caracteristica.id }}" class="chk"
+                                               {% if siTiene %}checked{% endif %}> {{ caracteristica.ca_nombre }}
+                                    </div>
                                 {% endfor %}
-                            </ul>
-                            <hr>
-                            <h3 class="my-3">Servicios</h3>
-                            <hr>
-                            <div id="idDivScroll" class="scrollDiv" >
+                            </div>
 
-                                <div class="list-group ">
-                                    {% for servicio in perfil.escortServicios %}
-                                        <a style="cursor:pointer" id="idSrv_{{ servicio.id }}"
-                                           onclick="muestraServicioEdit('{{ servicio.servicioId }}','{{ servicio.duracionId }}','{{ servicio.servicioPrecio }}');"
-                                           class="list-group-item list-group-item-action">
-                                            {{ servicio.servicioNombre }}&nbsp; - {{ servicio.servicioDuracion }}&nbsp;
-                                            - &nbsp;&#8364;{{ servicio.servicioPrecio }}&nbsp;
-                                        </a>
-                                    {% endfor %}
+
+                            <hr>
+                            <div class="row">
+                                <div class=" offset-1 my-2">
+                                    <h3>Servicios</h3>
+                                </div>
+                                <div class=" offset-1 my-2 agregar">
+                                    <a class="button fa fa-2x fa-plus-circle hestiaPoint " data-toggle="tooltip"
+                                       title="Agregar Servicio" onclick="muestraServicioEdit()"></a>
+                                </div>
+
+                                <hr>
+
+                                <div id="idDivScroll" class="scrollDiv">
+                                    <table class="table table-striped table-hover table-responsive table-servicios">
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col" style="display: none">#</th>
+                                            <th scope="col">Servicio</th>
+                                            <th scope="col">Duración</th>
+                                            <th scope="col">Precio (&#8364;)</th>
+                                        </tr>
+                                        </thead>
+                                        <thbody>
+                                            {% for servicio in perfil.escortServicios %}
+                                                <tr id='ts_{{ forloop.counter }}' class=" hestiaPoint"
+                                                    onclick="muestraServicioEdit('{{ servicio.servicioId }}','{{ servicio.duracionId }}','{{ servicio.servicioPrecio }}','{{ forloop.counter }}');">
+                                                    <th scope="row" style="display: none">{{ forloop.counter }}</th>
+                                                    <td class="servicioNombre">{{ servicio.servicioNombre }}</td>
+                                                    <td class="servicioDuracion">{{ servicio.servicioDuracion }}</td>
+                                                    <td class="servicioPrecio">{{ servicio.servicioPrecio }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </thbody>
+                                    </table>
+
                                 </div>
 
                             </div>
@@ -131,7 +229,7 @@
                             <div class="row">
                                 <div class="offset-1 col-xs-4"><b>Tipo Servicio:&nbsp</b></div>
                                 <div class="col-xs-7">
-                                    <select name="idServicioEdit" id="idServicioEdit">
+                                    <select class="servicioEdit servicioEditM">
                                         {% for servicio in servicios %}
                                             <option value="{{ servicio.id }}">{{ servicio.sv_nombre }}</option>
                                         {% endfor %}
@@ -142,7 +240,7 @@
                             <div class="row">
                                 <div class="offset-1 col-xs-4"><b>Duración:&nbsp</b></div>
                                 <div class="col-xs-7">
-                                    <select name="idDuracionEdit" id="idDuracionEdit">
+                                    <select class="duracionEdit duracionEditM">
                                         {% for duracion in duraciones %}
                                             <option value="{{ duracion.id }}">{{ duracion.du_nombre }}</option>
                                         {% endfor %}
@@ -153,7 +251,8 @@
                             <div class="row">
                                 <div class="offset-1 col-xs-4"><b>Tarifa (&#8364;):&nbsp</b></div>
                                 <div class="col-xs-7">
-                                    <input id="idPrecioEdit" type="text" maxlength="6" size="6" value="1200.00">
+                                    <input class="precioEdit precioEditM" type="number" placeholder="multiplos de 10"
+                                           step="10" maxlength="6" size="6" value="1200.00">
                                     </select>
                                 </div>
                             </div>
@@ -161,14 +260,17 @@
                             <div class="row">
                                 <div class="offset-1 col-xs-4"><b>Acciones:&nbsp</b></div>
                                 <div class="col-xs-7">
-                                    <i onclick="ejecutarAccion('aceptar')" style="cursor: pointer"
-                                       class="fa fa-check"></i>
+                                    <a onclick="ejecutarAccion('aceptar')"
+                                       class="fa fa-check hestiaPoint aceptar" data-toggle="tooltip"
+                                       title="Aceptar Cambios"></a>
                                     &nbsp;
-                                    <i onclick="ejecutarAccion('rechazar')" style="cursor: pointer"
-                                       class="fa fa-undo"></i>
+                                    <a onclick="ejecutarAccion('rechazar')"
+                                       class="fa fa-undo hestiaPoint rechazar" data-toggle="tooltip"
+                                       title="Ignorar Cambios"></a>
                                     &nbsp;
-                                    <i onclick="ejecutarAccion('eliminar')" style="cursor: pointer"
-                                       class="fa fa-trash"></i>
+                                    <a onclick="ejecutarAccion('eliminar')"
+                                       class="fa fa-trash hestiaPoint eliminar" data-toggle="tooltip"
+                                       title="Eliminar"></a>
                                 </div>
                             </div>
                             <hr>
@@ -179,37 +281,45 @@
                     <div class="d-none d-md-block"><!-- solo para laptops y desktops -->
 
                         <div class="row servicioEdit titulosServicioEdit" style="display: none">
-                            <div class="offset-2 col-md-3"><b>Tipo Servicio</b></div>
-                            <div class="col-md-3"><b>Duración</b></div>
-                            <div class="col-md-2"><b>Tarifa (&#8364;)</b></div>
-                            <div class="col-md-2"><b>Acciones</b></div>
+                            <div id="idNumRow" style="display: none"></div>
+                            <div class="offset-1 col-md-2"><b>Tipo Servicio</b></div>
+                            <div class="offset-1 col-md-2"><b>Duración</b></div>
+                            <div class="offset-1 col-md-2"><b>Tarifa (&#8364;)</b></div>
+                            <div class="offset-1 col-md-2"><b>Acciones</b></div>
                         </div>
 
                         <div class="row servicioEdit detalleServicioEdit hidden-sm-down" style="display: none">
 
-                            <div class="offset-2 col-md-3">
-                                <select name="idServicioEdit" id="idServicioEdit">
+                            <div class="offset-1 col-md-2">
+                                <select class="servicioEdit servicioEditD">
                                     {% for servicio in servicios %}
                                         <option value="{{ servicio.id }}">{{ servicio.sv_nombre }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-md-3">
-                                <select name="idDuracionEdit" id="idDuracionEdit">
+                            <div class="offset-1 col-md-2">
+                                <select class="duracionEdit duracionEditD">
                                     {% for duracion in duraciones %}
                                         <option value="{{ duracion.id }}">{{ duracion.du_nombre }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-md-2">
-                                <input id="idPrecioEdit" type="text" maxlength="6" size="6" value="1200.00">
+                            <div class="offset-1 col-md-2">
+                                <input class="precioEdit precioEditD" type="number" step="10" min="10" max="100000"
+                                       value="1200.00">
                             </div>
-                            <div class="col-md-2">
-                                <i onclick="ejecutarAccion('aceptar')" style="cursor: pointer" class="fa fa-check"></i>
+                            <div class="offset-1 col-md-2">
+
+                                <a onclick="ejecutarAccion('aceptar')"
+                                   class="fa fa-check hestiaPoint aceptar" data-toggle="tooltip"
+                                   title="Aceptar Cambios"></a>
                                 &nbsp;
-                                <i onclick="ejecutarAccion('rechazar')" style="cursor: pointer" class="fa fa-undo"></i>
+                                <a onclick="ejecutarAccion('rechazar')"
+                                   class="fa fa-undo hestiaPoint rechazar" data-toggle="tooltip"
+                                   title="Ignorar Cambios"></a>
                                 &nbsp;
-                                <i onclick="ejecutarAccion('eliminar')" style="cursor: pointer" class="fa fa-trash"></i>
+                                <a onclick="ejecutarAccion('eliminar')"
+                                   class="fa fa-trash hestiaPoint eliminar" data-toggle="tooltip" title="Eliminar"></a>
                                 &nbsp;
                             </div>
                         </div>
@@ -261,13 +371,21 @@
                             </a>
                         </div>
 
+                        <input type="file" name="myimage" class="control-group form-group">
+                        <button type="submit" class="control-group form-group">Upload</button>
+                        {% if uploaded_file_url %}
+                            <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+                        {% endif %}
+
                     </div>
                     <!-- /.row -->
 
                     <div id="success"></div>
                     <!-- For success/fail messages -->
                     <br>
-                    <button type="submit" class="btn btn-primary" id="sendConfiguracionButton">Guardar</button>
+                    <button onclick="enviarFormulario()" type="button" class="btn btn-primary"
+                            id="sendConfiguracionButton">Guardar
+                    </button>
                     <br><br>
                 </form>
             </div>
@@ -277,19 +395,121 @@
     </div>
 
     <script>
-        function muestraServicioEdit(servicioId, duracionId, precio) {
+        var agregando = false;
+
+        function muestraServicioEdit(servicioId, duracionId, precio, idNumRow) {
+            if (typeof precio == 'undefined') {
+                agregando = true;
+                $('.aceptar').addClass('hestiaDisabled');
+                $('.eliminar').addClass('hestiaDisabled');
+            }
+            else {
+                agregando = false;
+                $('.aceptar').removeClass('hestiaDisabled');
+                $('.eliminar').removeClass('hestiaDisabled');
+            }
+
+            $('.agregar').addClass('hestiaDisabled');
+
+            $('.servicioEdit').val(servicioId);
+            $('.duracionEdit').val(duracionId);
+            $('.precioEdit').val(precio);
+            $('#idNumRow').val(idNumRow);
             $('#idDivScroll').addClass('hestiaDisabled');
             $('.servicioEdit').show();
-            $('#idServicioEdit').val(servicioId);
-            $('#idDuracionEdit').val(duracionId);
-            $('#idPrecioEdit').val(precio);
         }
 
-        function ejecutarAccion() {
+        function ejecutarAccion(accion) {
+            var mobile = null
+            if ($(window).width() < 768)
+                mobile = true
+            else
+                mobile = false
+
+            var newRowContent = '';
+            if (mobile) {
+                if (agregando) {
+                    newRowContent += '<tr id="ts_' + $(".table-servicios").length + 1 + '" class=" hestiaPoint" onclick="muestraServicioEdit(' + $(".servicioEditM option:selected").val() + ',' + $(".duracionEditM option:selected").val() + ',' + $(".precioEditM").val() + ',' + $(".table-servicios").length + 1 + ');">';
+                    newRowContent += '<th scope="row" style="display: none">' + $(".table-servicios").length + 1 + '</th>';
+                }
+                else {
+                    newRowContent += '<tr id="ts_' + $("#idNumRow").val() + '" class=" hestiaPoint" onclick="muestraServicioEdit(' + $(".servicioEditM option:selected").val() + ',' + $(".duracionEditM option:selected").val() + ',' + $(".precioEditM").val() + ',' + $("#idNumRow").val() + ');">';
+                    newRowContent += '<th scope="row" style="display: none">' + $("#idNumRow").val() + '</th>';
+                }
+                newRowContent += '<td class="servicioNombre">' + $(".servicioEditM option:selected").text() + '</th>';
+                newRowContent += '<td class="servicioDuracion">' + $(".duracionEditM option:selected").text() + '</th>';
+                newRowContent += '<td class="servicioPrecio">' + $(".precioEditM").val() + '</th>';
+            }
+            else {
+                if (agregando) {
+                    newRowContent += '<tr id="ts_' + $(".table-servicios").length + 1 + '" class=" hestiaPoint" onclick="muestraServicioEdit(' + $(".servicioEditD option:selected").val() + ',' + $(".duracionEditD option:selected").val() + ',' + $(".precioEditD").val() + ',' + $(".table-servicios").length + 1 + ');">';
+                    newRowContent += '<th scope="row" style="display: none">' + $(".table-servicios").length + 1 + '</th>';
+                }
+                else {
+                    newRowContent += '<tr id="ts_' + $("#idNumRow").val() + '" class=" hestiaPoint" onclick="muestraServicioEdit(' + $(".servicioEditD option:selected").val() + ',' + $(".duracionEditD option:selected").val() + ',' + $(".precioEditD").val() + ',' + $("#idNumRow").val() + ');">';
+                    newRowContent += '<th scope="row" style="display: none">' + $("#idNumRow").val() + '</th>';
+                }
+                newRowContent += '<td class="servicioNombre">' + $(".servicioEditD option:selected").text() + '</th>';
+                newRowContent += '<td class="servicioDuracion">' + $(".duracionEditD option:selected").text() + '</th>';
+                newRowContent += '<td class="servicioPrecio">' + $(".precioEditD").val() + '</th>';
+            }
+            if (accion == 'aceptar') {
+                if (agregando)
+                    $(".table-servicios tbody").append(newRowContent);
+                else
+                    $("#ts_" + $("#idNumRow").val()).replaceWith(newRowContent)
+            }
+            if (accion == 'eliminar') {
+                $("#ts_" + $("#idNumRow").val()).remove();
+            }
+
             $('#idDivScroll').removeClass('hestiaDisabled');
+            $('.agregar').removeClass('hestiaDisabled');
             $('.servicioEdit').hide();
         }
     </script>
 
+    <script>
+        function enviarFormulario() {
+            servicios = [];
+            $('.table-servicios tr').each(function () {
+                var servicioNombre = $(this).find(".servicioNombre").html();
+                var servicioDuracion = $(this).find(".servicioDuracion").html();
+                var servicioPrecio = $(this).find(".servicioPrecio").html();
+                servicio = {};
+                servicio['nombre'] = servicioNombre;
+                servicio['duracion'] = servicioDuracion;
+                servicio['precio'] = servicioPrecio;
+                servicios.push(servicio)
+            })
+
+            caracteristicasItems = getValueUsingClass();
+            $.ajax({
+                type: "GET",
+                url: 'escort-update-info',
+                data: {
+                    'algo': 'abc',
+                },
+                cache: "false",
+                data: {
+                    'escortId':{{ perfil.escortId }},
+                    'nombre': $('#nombre').val(),
+                    'apellido': $('#apellido').val(),
+                    'telefono': $('#telefono').val(),
+                    'email': $('#email').val(),
+                    'descripcion': $('#descripcion').val(),
+                    'caracteristicas': caracteristicasItems,
+                    'servicios': JSON.stringify(servicios),
+                },
+                success: function () {
+                    location.reload();
+                },
+                dataType: 'json'
+            });
+            return true;
+        }
+    </script>
+
 {% endblock contenido %}
+
 

@@ -18,5 +18,8 @@ urlpatterns = [
     url(r'^provincia-(?P<pk>[\w\-]+).html$', views.portfolio_provincia, name='portfolio_provincia'),
     url(r'^ciudad', views.ciudad, name='ciudad'),
     url(r'^portfolio-(?P<pk>[\w\-]+)$', views.portfolio_escort, name='portfolio'),
+    url(r'^escort-upload-images$', views.escort_upload_images, name='escort-upload-images'),
     url(r'^conf-escort-(?P<pk>[\w\-]+)$', views.conf_escort, name='conf-escort'),
+    url(r'^escort-update-info$', views.escort_update_info, name='escort-update-info'),
+
 ]

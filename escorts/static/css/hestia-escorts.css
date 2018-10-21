@@ -3,8 +3,15 @@
     opacity:0.6;
 }
 
+.hestiaPoint {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+
 .scrollDiv {
-    height: 220px;
+    height: 300px;
     overflow-y: scroll
 }
 

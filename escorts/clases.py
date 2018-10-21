@@ -17,11 +17,12 @@ class PerfilEscort:
         self.escortCiudad = None
         self.escortCaracteristicas = None
         self.escortServicios = None
-
+        self.username=None
         self.cargaInfoEscort()
 
     def cargaInfoEscort(self):
         escort= Escort.objects.get(id=self.escortId)
+        self.username=escort.es_user.username
         self.escortSlug = escort.es_slug
         self.escortNombre = escort.es_nombre
         self.escortDescripcion = escort.es_descripcion
