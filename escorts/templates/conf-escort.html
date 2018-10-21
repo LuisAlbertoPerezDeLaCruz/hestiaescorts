@@ -64,6 +64,20 @@
             $("#buttonClass").click(function () {
                 getValueUsingClass();
             });
+            
+{% comment %}            $("#myNewImage_1").change(function(){
+                $("#myImage_1").attr("src",$(this).val());
+            });{% endcomment %}
+
+            $("#myNewImage_1").change(function () {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#myImage_1').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
 
 
         });
@@ -107,7 +121,8 @@
             <div class="col-xl-12">
                 <h4>Entre sus datos</h4>
                 <br>
-                <form id="contactForm" action='escort-upload-images' method="post" enctype="multipart/form-data" novalidate>
+                <form id="contactForm" action='escort-upload-images' method="post" enctype="multipart/form-data"
+                      novalidate>
                     {% csrf_token %}
                     <div class="control-group form-group">
                         <div class="controls">
@@ -159,10 +174,16 @@
 
                         <div class="col-md-6">
 
-                            <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_1 %}"
+                            <img id="myImage_1" class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_1 %}"
                                  alt="{{ escortSeleccionada.es_nombre }}">
 
+                            <label for="myNewImage_1" class="custom-file-upload">
+                                <i class="fa fa-cloud-upload"></i> cambiar foto
+                            </label>
+                            <input id="myNewImage_1" type="file" name="myNewImage_1" class="control-group form-group">
+
                         </div>
+
 
                         <div class="col-md-6">
                             <h3 class="my-3">Características</h3>
@@ -176,7 +197,6 @@
                                     </div>
                                 {% endfor %}
                             </div>
-
 
                             <hr>
                             <div class="row">
@@ -331,48 +351,68 @@
                     <div class="row">
 
                         <div class="col-md-3 col-sm-6 mb-4">
-                            <a href="#">
+                            <label for="myNewImage_2" class="custom-file-upload">
+                                <i class="fa fa-cloud-upload"></i> cambiar foto
+                            </label>
+                            <input id="myNewImage_2" type="file" name="myNewImage_2" class="control-group form-group">
+                            <div>
                                 {% if escortSeleccionada.full_ruta_foto_2 %}
                                     <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_2 %}"
                                          alt="{{ escortSeleccionada.es_nombre }}">
                                 {% else %}
                                     <img class="img-fluid" src="http://placehold.it/500x300" alt="">
                                 {% endif %}
-                            </a>
+                            </div>
                         </div>
+
                         <div class="col-md-3 col-sm-6 mb-4">
-                            <a href="#">
+                            <label for="myNewImage_3" class="custom-file-upload">
+                                <i class="fa fa-cloud-upload"></i> cambiar foto
+                            </label>
+                            <input id="myNewImage_3" type="file" name="myNewImage_3" class="control-group form-group">
+                            <div>
                                 {% if escortSeleccionada.full_ruta_foto_3 %}
                                     <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_3 %}"
                                          alt="{{ escortSeleccionada.es_nombre }}">
                                 {% else %}
                                     <img class="img-fluid" src="http://placehold.it/500x300" alt="">
                                 {% endif %}
-                            </a>
+                            </div>
                         </div>
+
                         <div class="col-md-3 col-sm-6 mb-4">
-                            <a href="#">
+                            <label for="myNewImage_4" class="custom-file-upload">
+                                <i class="fa fa-cloud-upload"></i> cambiar foto
+                            </label>
+                            <input id="myNewImage_4" type="file" name="myNewImage_4" class="control-group form-group">
+                            <div>
                                 {% if escortSeleccionada.full_ruta_foto_4 %}
                                     <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_4 %}"
                                          alt="{{ escortSeleccionada.es_nombre }}">
                                 {% else %}
                                     <img class="img-fluid" src="http://placehold.it/500x300" alt="">
                                 {% endif %}
-                            </a>
+                            </div>
                         </div>
+
                         <div class="col-md-3 col-sm-6 mb-4">
-                            <a href="#">
+                            <label for="myNewImage_5" class="custom-file-upload">
+                                <i class="fa fa-cloud-upload"></i> cambiar foto
+                            </label>
+                            <input id="myNewImage_5" type="file" name="myNewImage_5" class="control-group form-group">
+                            <div>
                                 {% if escortSeleccionada.full_ruta_foto_5 %}
                                     <img class="img-fluid" src="{% static escortSeleccionada.full_ruta_foto_5 %}"
                                          alt="{{ escortSeleccionada.es_nombre }}">
                                 {% else %}
                                     <img class="img-fluid" src="http://placehold.it/500x300" alt="">
                                 {% endif %}
-                            </a>
+                            </div>
                         </div>
 
-                        <input type="file" name="myimage" class="control-group form-group">
-                        <input type="text" name="escortSeleccionada" class="control-group form-group" value="{{ escortSeleccionada.es_user.username }}" hidden>
+                        <input type="file" name="myNewImage" class="control-group form-group">
+                        <input type="text" name="escortSeleccionada" class="control-group form-group"
+                               value="{{ escortSeleccionada.es_user.username }}" hidden>
                         <button type="submit" class="control-group form-group">Upload</button>
                         {% if uploaded_file_url %}
                             <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>

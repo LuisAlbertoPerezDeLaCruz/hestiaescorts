@@ -149,3 +149,19 @@ body {
 }
 
 /* termina el css del zoom de las imagenes */
+
+
+
+/* comienza el css del custom file upload */
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+/* termina el css del custom file upload */
