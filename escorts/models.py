@@ -149,6 +149,14 @@ class Escort(models.Model):
 
     full_ruta_foto_5 = property(_get_full_ruta_foto_5)
 
+    def _get_ruta_upload(self):
+        "Devuelve la ruta de la carpeta de imagenes"
+        url = settings.MEDIA_ROOT + '/imagenes'
+        temp = '%s/%s/%s/' % (url, self.es_pais.pk, self.es_user.username)
+        return temp
+
+    full_ruta_upload = property(_get_ruta_upload)
+
 
 class HestiaInfo(models.Model):
     hi_carrusel_cantidad = models.IntegerField(default=3)

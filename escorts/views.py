@@ -188,11 +188,16 @@ def escort_upload_images(request):
     from django.shortcuts import render
     from django.conf import settings
     from django.core.files.storage import FileSystemStorage
+    ruta=''
+    if request.method == 'POST' and request.POST['escortSeleccionada']:
+        escortSeleccionada=Escort.objects.get(es_user__username=request.POST['escortSeleccionada'])
+        ruta=escortSeleccionada.full_ruta_upload
+        pass
 
     if request.method == 'POST' and request.FILES['myimage']:
         myimage = request.FILES['myimage']
         fs = FileSystemStorage()
-        filename = fs.save(myimage.name, myimage)
+        filename = fs.save(ruta+myimage.name, myimage)
         uploaded_file_url = fs.url(filename)
         return render(request, 'conf-escort.html', {
             'uploaded_file_url': uploaded_file_url
